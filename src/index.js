@@ -38,15 +38,18 @@ app.use(morgan(cfg.isDev ? 'dev' : 'combined'));
 app.set('trust proxy', true);
 
 // CORS
+const allowlist = new Set([
+  cfg.CORS_ORIGIN,                           // e.g. 'https://itec401-nov5-nf.sgubproject.com'
+  cfg.CORS_ORIGIN_PRODUCTION
+]);
+
 app.use(cors({
-  origin: (origin, cb) => {
-    if (!origin || cfg.isDev) return cb(null, true);
-    return origin === cfg.CORS_ORIGIN ? cb(null, true) : cb(new Error('CORS blocked'), false);
-  },
+  origin: (origin, cb) => cb(null, !origin || allowlist.has(origin)),
   methods: ['GET','POST','PUT','DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type','Authorization'],
-  credentials: false,
+  credentials: false
 }));
+
 
 // Public health route
 app.use('/api/v1/healthz', healthRouter());

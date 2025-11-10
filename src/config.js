@@ -20,6 +20,9 @@ export function createConfig(env) {
     // CORS
     CORS_ORIGIN: (isDev ? env.CORS_ORIGIN_DEVELOPMENT : env.CORS_ORIGIN_PRODUCTION) || "https://itec401-demo-nf.sgubproject.com",
 
+    CORS_ORIGIN_DEVELOPMENT: env.CORS_ORIGIN_DEVELOPMENT,
+    CORS_ORIGIN_PRODUCTION: env.CORS_ORIGIN_PRODUCTION,
+    
     // JSON body limits
     JSON_BODY_LIMIT: env.JSON_BODY_LIMIT || '256kb',
 
